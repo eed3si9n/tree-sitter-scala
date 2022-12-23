@@ -23,8 +23,8 @@ module.exports = grammar({
   name: 'scala',
 
   extras: $ => [
-    /\s/,
-    $.comment
+    /[\u0020\u0009\u000D]/,
+    $.comment,
   ],
 
   supertypes: $ => [
@@ -78,6 +78,7 @@ module.exports = grammar({
       $.package_object,
       $._definition,
       $._end_marker,
+      $._nl,
     ),
 
     _definition: $ => choice(
@@ -413,6 +414,7 @@ module.exports = grammar({
         $.expression,
         $._definition,
         $._end_marker,
+        $._nl,
       )),
       optional($._semicolon),
     )),
@@ -900,6 +902,8 @@ module.exports = grammar({
       ';',
       $._automatic_semicolon
     ),
+
+    _nl: $ => '\n',
 
     null_literal: $ => 'null',
 
